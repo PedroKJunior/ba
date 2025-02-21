@@ -49,7 +49,7 @@ export function Navbar() {
 					<Link to="/">Dashboard</Link>
 				</Li>
 				<Li>
-					<Link to="/owners">Proprietários</Link>
+					<Link to="/productors">Proprietários</Link>
 				</Li>
 				<Li>
 					<Link to="/properties">Propriedades</Link>
