@@ -3,8 +3,8 @@ export interface Property {
 	name: string
 	city: string
 	state: string
-	total_area: number
-	arable_area: number
-	vegetation_area: number
+	totalArea: number
+	arableArea: number
+	vegetationArea: number
 	productorId: number
 }
