@@ -30,7 +30,9 @@ const SelectBox = styled.div`
 	align-items: center;
 `
 
-const OptionsList = styled.ul<{ isOpen: boolean }>`
+const OptionsList = styled.ul.withConfig({
+	shouldForwardProp: prop => prop !== 'isOpen',
+})<{ isOpen: boolean }>`
 	position: absolute;
 	width: 100%;
 	border: 1px solid #131a1d;
@@ -83,7 +85,7 @@ export function Select({ options, onChange, placeholder = 'Selecione uma opção
 
 	return (
 		<SelectContainer ref={selectRef}>
-			<SelectBox onClick={() => setIsOpen(!isOpen)}>
+			<SelectBox onClick={() => setIsOpen(!isOpen)} data-testid="select-box">
 				{selectedOption ? selectedOption.label : placeholder}
 				<ChevronDownIcon
 					style={{
