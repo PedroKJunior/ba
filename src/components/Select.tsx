@@ -9,8 +9,9 @@ interface Option {
 
 interface SelectProps {
 	options: Option[]
-	onChange: (value: string) => void
+	onChange: (event: SelectEvent) => void
 	placeholder?: string
+	name?: string
 }
 
 const SelectContainer = styled.div`
@@ -59,14 +60,19 @@ const OptionItem = styled.li`
 	}
 `
 
-export function Select({ options, onChange, placeholder = 'Selecione uma opção' }: SelectProps) {
+export function Select({ options, onChange, placeholder = 'Selecione uma opção', name = '' }: SelectProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 	const selectRef = useRef<HTMLDivElement>(null)
 
 	const handleSelect = (option: Option) => {
 		setSelectedOption(option)
-		onChange(option.value)
+		onChange({
+			target: {
+				name,
+				value: option.value,
+			},
+		})
 		setIsOpen(false)
 	}
 
