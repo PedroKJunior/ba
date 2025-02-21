@@ -6,17 +6,13 @@ import { Input } from '../components/Input'
 
 import { View, Container, Title, Label, Hr, Space } from '../styles/view'
 
+import type { Crop } from '../@types/crop'
+
 const options = [
 	{ value: 'option1', label: 'Opção 1' },
 	{ value: 'option2', label: 'Opção 2' },
 	{ value: 'option3', label: 'Opção 3' },
 ]
-
-interface Crop {
-	harvestYear: string
-	cropType: string
-	farm: string
-}
 
 export function Harvests() {
 	const [data, setData] = useState<Crop>({
