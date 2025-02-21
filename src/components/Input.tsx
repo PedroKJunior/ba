@@ -11,6 +11,7 @@ const InputStyled = styled.input`
 	outline: none;
 	border: 1px solid #131a1d;
 	width: 100%;
+	transition: all 0.2s ease-in-out;
 
 	&:focus {
 		border-color: #b4e900;
