@@ -1,12 +1,5 @@
 import { styled } from 'styled-components'
 
-interface InputProps {
-	type?: string
-	placeholder?: string
-	onChange: (value: string) => void
-	value: null | string
-}
-
 const InputStyled = styled.input`
 	font-family: 'Roboto', sans-serif;
 	font-size: 1em;
@@ -24,13 +17,6 @@ const InputStyled = styled.input`
 	}
 `
 
-export function Input({ type = 'text', placeholder = 'Type something...', onChange, value }: InputProps) {
-	return (
-		<InputStyled
-			type={type}
-			placeholder={placeholder}
-			onChange={event => onChange(event.target.value)}
-			value={value ?? ''}
-		/>
-	)
+export function Input({ ...props }) {
+	return <InputStyled {...props} />
 }
