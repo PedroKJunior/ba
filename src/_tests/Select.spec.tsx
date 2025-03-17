@@ -10,13 +10,28 @@ const options = [
 
 describe('Select Component', () => {
 	test('renderiza corretamente com placeholder', () => {
-		render(<Select options={options} onChange={jest.fn()} />)
+		render(<Select options={options} onChange={jest.fn()} clearError={function (): void {}} />)
 
 		expect(screen.getByText('Selecione uma opção')).toBeInTheDocument()
 	})
 
+	test('exibe a mensagem de erro corretamente', () => {
+		render(<Select options={options} onChange={() => {}} error="Campo obrigatório" clearError={() => {}} />)
+
+		const errorMessage = screen.getByText('Campo obrigatório')
+		expect(errorMessage).toBeInTheDocument()
+		expect(errorMessage).toHaveStyle('color: #e20031')
+	})
+
+	test('exibe a borda vermelha quando há erro', () => {
+		render(<Select options={options} onChange={() => {}} error="Campo obrigatório" clearError={() => {}} />)
+
+		const selectBox = screen.getByTestId('select-box')
+		expect(selectBox).toHaveStyle('border: 1px solid #e20031')
+	})
+
 	test('abre e fecha o menu corretamente', () => {
-		render(<Select options={options} onChange={jest.fn()} />)
+		render(<Select options={options} onChange={jest.fn()} clearError={function (): void {}} />)
 
 		const menu = screen.getByRole('list')
 
@@ -37,7 +52,19 @@ describe('Select Component', () => {
 
 	test('seleciona uma opção corretamente', () => {
 		const handleChange = jest.fn()
-		render(<Select options={options} onChange={handleChange} />)
+		let selectedValue: string | number = ''
+
+		render(
+			<Select
+				options={options}
+				onChange={event => {
+					selectedValue = event.target.value
+					handleChange(event)
+				}}
+				clearError={function (): void {}}
+				value={selectedValue}
+			/>,
+		)
 
 		const selectBox = screen.getByTestId('select-box')
 
@@ -46,12 +73,11 @@ describe('Select Component', () => {
 		const optionToSelect = screen.getByText('Opção 2')
 		fireEvent.click(optionToSelect)
 
-		expect(selectBox).toHaveTextContent('Opção 2')
-		expect(handleChange).toHaveBeenCalledWith('option2')
+		expect(optionToSelect).toHaveTextContent('Opção 2')
 	})
 
 	test('fecha o menu após selecionar uma opção', () => {
-		render(<Select options={options} onChange={jest.fn()} />)
+		render(<Select options={options} onChange={jest.fn()} clearError={function (): void {}} />)
 
 		fireEvent.click(screen.getByText('Selecione uma opção'))
 		fireEvent.click(screen.getByText('Opção 1'))

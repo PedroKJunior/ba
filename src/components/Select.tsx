@@ -12,16 +12,26 @@ interface SelectProps {
 	onChange: (event: SelectEvent) => void
 	placeholder?: string
 	name?: string
+	disabled?: boolean
+	error?: string | null
+	onClick?: () => void
+	clearError: () => void
+	value?: string
 }
 
-const SelectContainer = styled.div`
+const SelectContainer = styled.div.withConfig({
+	shouldForwardProp: prop => prop !== 'disabled',
+})<{ disabled: boolean }>`
+	pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 	position: relative;
 	width: 100%;
 `
 
-const SelectBox = styled.div`
-	border: 1px solid #131a1d;
-	padding: 0.5rem;
+const SelectBox = styled.div.withConfig({
+	shouldForwardProp: prop => prop !== 'isOpen' && prop !== 'error',
+})<{ isOpen: boolean; error: boolean }>`
+	border: 1px solid ${({ isOpen, error }) => (isOpen ? '#b4e900' : error ? '#e20031' : '#131a1d')};
 	cursor: pointer;
 	background-color: #131a1d;
 	color: #dadada;
@@ -29,6 +39,10 @@ const SelectBox = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	outline: none;
+	padding: 0;
+	padding-right: 0.5rem;
+	padding: 0.5rem;
 `
 
 const OptionsList = styled.ul.withConfig({
@@ -49,21 +63,47 @@ const OptionsList = styled.ul.withConfig({
 		opacity 0.3s ease-in-out,
 		transform 0.3s ease-in-out;
 	pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+	outline: none;
 `
 
 const OptionItem = styled.li`
 	padding: 0.5rem;
 	cursor: pointer;
+	outline: none;
 	&:hover {
+		background-color: #b4e900;
+		color: #131a1d;
+	}
+	&:focus {
 		background-color: #b4e900;
 		color: #131a1d;
 	}
 `
 
-export function Select({ options, onChange, placeholder = 'Selecione uma opção', name = '' }: SelectProps) {
+const ErrorStyled = styled.span`
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.75em;
+	color: #e20031;
+	font-weight: bold;
+	padding: 0.5rem;
+	width: 100%;
+`
+
+export function Select({
+	options,
+	onChange,
+	placeholder = 'Selecione uma opção',
+	name = '',
+	disabled = false,
+	error,
+	clearError,
+	value = '',
+}: SelectProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+
 	const selectRef = useRef<HTMLDivElement>(null)
+	const listRef = useRef<HTMLUListElement>(null)
 
 	const handleSelect = (option: Option) => {
 		setSelectedOption(option)
@@ -90,9 +130,17 @@ export function Select({ options, onChange, placeholder = 'Selecione uma opção
 	}, [])
 
 	return (
-		<SelectContainer ref={selectRef}>
-			<SelectBox onClick={() => setIsOpen(!isOpen)} data-testid="select-box">
-				{selectedOption ? selectedOption.label : placeholder}
+		<SelectContainer ref={selectRef} disabled={disabled}>
+			<SelectBox
+				onClick={() => {
+					setIsOpen(!isOpen)
+					clearError()
+				}}
+				data-testid="select-box"
+				isOpen={isOpen}
+				error={!!error}
+			>
+				{value.trim() ? selectedOption?.label : placeholder}
 				<ChevronDownIcon
 					style={{
 						width: '1rem',
@@ -103,13 +151,14 @@ export function Select({ options, onChange, placeholder = 'Selecione uma opção
 				/>
 			</SelectBox>
 
-			<OptionsList isOpen={isOpen}>
+			<OptionsList isOpen={isOpen} ref={listRef}>
 				{options.map(option => (
-					<OptionItem key={option.value} onClick={() => handleSelect(option)}>
+					<OptionItem tabIndex={0} key={option.value} onClick={() => handleSelect(option)}>
 						{option.label}
 					</OptionItem>
 				))}
 			</OptionsList>
+			{error && <ErrorStyled>{error}</ErrorStyled>}
 		</SelectContainer>
 	)
 }

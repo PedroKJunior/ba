@@ -1,5 +1,9 @@
 export interface Productor {
-	id: number
+	id: string
 	name: string
-	taxId: number
+	taxId: string
+}
+export interface ProductorDB {
+	name: string
+	tax_id: string
 }
