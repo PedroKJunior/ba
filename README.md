@@ -2,7 +2,7 @@
 
 **Brain Agriculture** é um sistema de gestão agrícola voltado para o controle de propriedades rurais, produtores e safras. A plataforma fornece um painel visual interativo com gráficos que ajudam a entender melhor a distribuição de propriedades, uso do solo e culturas plantadas.
 
-link da pagina: https://pedrokjunior.github.io/ba/
+link da pagina: https://pedrokjunior.github.io
 
 ## 🖥️ Funcionalidades
 
