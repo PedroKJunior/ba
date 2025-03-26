@@ -1,50 +1,65 @@
-# React + TypeScript + Vite
+# 🌿 Brain Agriculture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Brain Agriculture** é um sistema de gestão agrícola voltado para o controle de propriedades rurais, produtores e safras. A plataforma fornece um painel visual interativo com gráficos que ajudam a entender melhor a distribuição de propriedades, uso do solo e culturas plantadas.
 
-Currently, two official plugins are available:
+link da pagina: https://pedrokjunior.github.io/ba/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🖥️ Funcionalidades
 
-## Expanding the ESLint configuration
+### 📊 Dashboard
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Total de fazendas cadastradas.
+- Total de hectares registrados.
+- Distribuição por estado.
+- Tipos de culturas plantadas.
+- Uso do solo: área agricultável vs vegetação.
 
-- Configure the top-level `parserOptions` property like this:
+### 🏡 Cadastro de Propriedades
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Permite registrar as seguintes informações:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Nome da propriedade
+- Estado e cidade
+- Área total (ha)
+- Área agricultável (ha)
+- Área de vegetação (ha)
+- Produtor responsável
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 👩‍🌾 Cadastro de Proprietários
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Cadastro de pessoas físicas ou jurídicas:
+
+- Nome
+- CPF ou CNPJ
+
+### 🌾 Cadastro de Safras
+
+Registro das safras agrícolas:
+
+- Ano da safra
+- Cultura (ex: feijão, morango)
+- Propriedade rural associada
+
+## 🧪 Tecnologias Utilizadas
+
+- **Front-End**: React com Vite
+- **Estilo**: CSS-in-JS com a lib Styled Components
+- **DB**: Firebase
+- **Gráficos**: Rechart JS
+- **Estados Globais**: Redux Toolkit
+
+## 🛠️ Ferramentas Externas Utilizadas
+
+- 🎨 **Geração de cores**: [Coolors](https://coolors.co/)
+- 🤖 **IAs**: ChatGPT e GitHub Copilot
+- 🖌️ **Criação de Imagens e Layout**: Figma
+
+## 🧠 Conceitos Aplicados
+
+- 🎯 **UI/UX** – Foco na experiência do usuário com interface intuitiva
+- 🎨 **Estilização** – Uso de styled-components para componentes reaproveitáveis e tema visual consistente
+- 🧩 **Componentização** – Separação lógica e visual dos elementos da aplicação
+- 🔁 **Estado Local e Global** – Gerenciamento eficiente com React hooks e Redux Toolkit
+- 🧪 **Testes** – Validação lógica e funcional da aplicação durante o desenvolvimento
+- 🧠 **Lógica e Pensamento Analítico** – Estruturação inteligente de dados e navegação
+- 🗂️ **Organização de Código** – Padrões claros, nomeação semântica e estrutura modular
