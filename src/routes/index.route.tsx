@@ -9,6 +9,7 @@ export function AppRoutes() {
 	return (
 		<Routes>
 			<Route path="/" element={<Dashboard />} />
+			<Route path="/ba" element={<Dashboard />} />
 			<Route path="/productors" element={<Productors />} />
 			<Route path="/properties" Component={Properties} />
 			<Route path="/harvests" Component={Harvests} />
