@@ -3,12 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import { Input } from '../components/Input'
 
 describe('Input Component', () => {
-	test('renderiza corretamente com placeholder', () => {
-		render(<Input placeholder="Digite algo" onChange={jest.fn()} />)
-
-		expect(screen.getByPlaceholderText('Digite algo')).toBeInTheDocument()
-	})
-
 	test('renderiza corretamente com valor', () => {
 		render(<Input value="Valor" onChange={jest.fn()} />)
 

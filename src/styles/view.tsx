@@ -8,6 +8,7 @@ export const View = styled.div`
 	height: calc(100vh - 60px);
 	width: 100vw;
 	color: #f0f0f5;
+	overflow: auto;
 `
 export const Container = styled.div`
 	max-width: 1280px;

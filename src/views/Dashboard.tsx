@@ -1,32 +1,29 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { View } from '../styles/view'
-import { Title, Text, SVG, Grid2, Small } from '../styles/dashboard'
+import { Title, Text, SVG, View, Grid2, Grid, Small } from '../styles/dashboard'
 
 import { PiFarm, PiPlantFill } from 'react-icons/pi'
 
 import { Card } from '../components/Card'
+import { Chart } from '../components/Chart'
 
-import ProductorsAPI from '../API/productors'
 import HarvestsAPI from '../API/harvests'
 import PropertiesAPI from '../API/properties'
 
-import productorMapper from '../mappers/productorMapper'
 import propertiesMapper from '../mappers/propertiesMapper'
 import harvestsMapper from '../mappers/harvestsMapper'
 
-import { IHarvests, IHarvestsDB } from '../@types/harvests'
-import { Productor, ProductorDB } from '../@types/productor'
-import { Property, PropertyDB } from '../@types/property'
+import { IHarvests } from '../@types/harvests'
+import { Property } from '../@types/property'
+
+import { grouped, sumGroupedAreas } from '../utils/grouped'
 
 export function Dashboard() {
 	const [harvests, setHarvest] = useState<IHarvests[]>([])
-	const [productor, setProductors] = useState<Productor[]>([])
 	const [properties, setProperties] = useState<Property[]>([])
 
 	const loadData = useCallback(async () => {
-		const harvestsResponse: Promise<Record<string, IHarvests>> = HarvestsAPI.getHarvests()
-		const productorsResponse: Promise<Record<string, Productor>> = ProductorsAPI.getProductors()
+		const harvestsResponse: Promise<Record<string, IHarvests>> = await HarvestsAPI.getHarvests()
 		const propertiesResponse: Promise<Record<string, Property>> = await PropertiesAPI.getProperties()
 
 		setHarvest(
@@ -36,13 +33,7 @@ export function Dashboard() {
 				})
 				.map(harvestsMapper.toDomain),
 		)
-		setProductors(
-			Object.entries(productorsResponse)
-				.map(([id, obj]) => {
-					return { id, ...obj }
-				})
-				.map(productorMapper.toDomain),
-		)
+
 		setProperties(
 			Object.entries(propertiesResponse)
 				.map(([id, obj]) => {
@@ -51,10 +42,6 @@ export function Dashboard() {
 				.map(propertiesMapper.toDomain),
 		)
 	}, [])
-
-	useEffect(() => {
-		console.log(properties)
-	}, [properties])
 
 	useEffect(() => {
 		loadData()
@@ -81,7 +68,12 @@ export function Dashboard() {
 						<Text>{properties.reduce((sum, property) => sum + Number(property.totalArea), 0)}</Text>
 					</Title>
 				</Card>
+				<Chart title="Estado" data={grouped(properties, 'state')} />
+				<Chart title="Cultura" data={grouped(harvests, 'cropType')} />
 			</Grid2>
+			<Grid>
+				<Chart title="Uso do Solo (hc)" data={sumGroupedAreas(properties)} />
+			</Grid>
 		</View>
 	)
 }
