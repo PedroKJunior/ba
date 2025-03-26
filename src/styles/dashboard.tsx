@@ -75,3 +75,12 @@ export const SVG = styled.div`
 	padding: 5px;
 	color: #b4e900;
 `
+export const Loading = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 35px;
+	width: 100%;
+	height: calc(100vh - 60px);
+	color: #e1e1e1;
+`

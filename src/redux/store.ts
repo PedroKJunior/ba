@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import cropReducer from './cropSlice'
+
+import harvestsReducer from './harvestsSlice'
+import propertiesReducer from './propertiesSlice'
 
 export const store = configureStore({
 	reducer: {
-		crop: cropReducer,
+		harvests: harvestsReducer,
+		properties: propertiesReducer,
 	},
 })
 
