@@ -107,7 +107,7 @@ Please change the parent <Route path="${T}"> to <Route path="${T==="/"?"*":`${T}
 	width: 1em;
 	height: 1em;
 	margin-right: 0.25em;
-`;function NU(){return Y.jsxs(MU,{children:[Y.jsx(PU,{src:"/logo.svg",alt:"B"}),"Brain Agriculture"]})}const DU=Re.nav`
+`;function NU(){return Y.jsxs(MU,{children:[Y.jsx(PU,{src:"images/logo.svg",alt:"BA"}),"Brain Agriculture"]})}const DU=Re.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
