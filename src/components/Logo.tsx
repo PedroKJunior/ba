@@ -21,7 +21,7 @@ const Image = styled.img`
 export function Logo() {
 	return (
 		<H1>
-			<Image src="/logo.svg" alt="B" />
+			<Image src="images/logo.svg" alt="BA" />
 			Brain Agriculture
 		</H1>
 	)
